@@ -4,6 +4,7 @@ using System.Linq;
 using Prism.AppModel;
 using Prism.Behaviors;
 using Prism.Common;
+using Prism.Controls;
 using Prism.Events;
 using Prism.Extensions;
 using Prism.Ioc;
@@ -145,6 +146,12 @@ namespace Prism
             RegisterRequiredTypes(_containerExtension);
             PlatformInitializer?.RegisterTypes(_containerExtension);
             RegisterTypes(_containerExtension);
+
+            if (!_containerExtension.IsRegistered(typeof(object), nameof(NavigationPage)))
+                _containerExtension.RegisterForNavigation<PrismNavigationPage>(nameof(NavigationPage));
+            if (!_containerExtension.IsRegistered(typeof(object), nameof(TabbedPage)))
+                _containerExtension.RegisterForNavigation<TabbedPage>();
+
             _containerExtension.FinalizeExtension();
 
             _moduleCatalog = Container.Resolve<IModuleCatalog>();

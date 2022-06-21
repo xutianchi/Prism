@@ -243,6 +243,12 @@ namespace Prism.Common
             DestroyPage(previousPage);
         }
 
+        public static async Task HandleNavigationPageGoBack(NavigationPage navigationPage)
+        {
+            var navigationService = Navigation.Xaml.Navigation.GetNavigationService(navigationPage.CurrentPage);
+            await navigationService.GoBackAsync();
+        }
+
         internal static bool HasDirectNavigationPageParent(Page page)
         {
             return page?.Parent != null && page?.Parent is NavigationPage;
